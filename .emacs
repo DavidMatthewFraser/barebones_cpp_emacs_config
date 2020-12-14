@@ -39,6 +39,10 @@
 (use-package which-key
   :ensure t)
 
+(use-package company
+  :ensure t)
+(global-company-mode 1)
+
 ;; Enable Which-Key for a guide to keyboard shortcuts
 (which-key-mode)
 
@@ -70,7 +74,25 @@
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
-(global-company-mode 1)
 
+;; exec-path-from-shell
 (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(exec-path-from-shell-initialize))
+
+
+;; powerline
+(add-to-list 'load-path "~/.emacs.d/vendor/emacs-powerline")
+(require 'powerline)
+(require 'cl)
+(setq powerline-arrow-shape 'arrow14)   ;; give your mode-line curves
+
+(set-face-attribute 'mode-line nil
+                    :foreground "Black"
+                    :background "DarkOrange"
+                    :box nil)
+
+;; font size of minibuffer
+(defun my-minibuffer-setup ()
+       (set (make-local-variable 'face-remapping-alist)
+          '((default :height 1.25))))
+(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup)
